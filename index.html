@@ -15,7 +15,7 @@
 </head>
 
 <body>
-    <nav class="navbar bg-dark text-light">
+    <nav class="navbar bg-dark navbar-fixed text-light">
         <h1 class="navbar-brand text-center">Hangman</h1>
     </nav>
 
@@ -24,11 +24,11 @@
             Press any key to get started
         </div>
         <div class="card-body">
-            <h5 class="win">Win</h5>
-            <p class="current-word">Current word</p>
-            <p class="number-guesses">Number of guesses remaining</p>
-            <p class="Number"></p>
-            <p class="letters">Letters already guesses</p>
+            <p id="user-key"></p>
+            <h5 id="winning-point"></h5>
+            <p id="current-word"></p>
+            <p id="number-guesses"></p>
+            <p id="letters-guesses"></p>
 
             <button class="btn btn-primary">refresh</button>
 
