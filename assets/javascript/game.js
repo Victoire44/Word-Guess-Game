@@ -1,36 +1,34 @@
-var winningPoint = document.getElementById("winning-point");
-var currentWord = document.getElementById("current-word");
-var numberGuesses = document.getElementById("number-guesses");
+var guessesLeft = document.getElementById("guessesLeft");
 
-var wins = 0;
-var number = 0;
+var score = 0;
+var guessesLeft = 0;
 var lettersGuesses = [];
+var currentWord = [];
 
 // List of electro bands
-const words = ["Disclosure", "Guetta", "Walker", "Daftpunk", "Justice", "Diplo"];
+const words = ["Disclosure", "Overwerk", "Walker", "Daftpunk", "Justice", "Diplo"];
 
 // Pick a random word
 const computerWord = words[Math.floor(Math.random() * words.length)];
 
 // replace the random word by dashes
 for (i = 0; i < computerWord.length; i++) {
-    currentWord.innerHTML = currentWord.innerHTML + "_ "
+    currentWord.push("_")   
 }
+document.getElementById("current-word").textContent = currentWord.join(" ");
 
 // on key press listener
-document.onkeypress = (event) => {
-    const userKey = event.key.toLowerCase();
-    const isInWord = computerWord.toLowerCase().includes(userKey);
+document.onkeyup = (event) => {
+    const userKey = event.key.toUpperCase();
+    const letterIndex = computerWord.toLocaleUpperCase().indexOf(userKey);
 
+    if (letterIndex !== -1) {
+        currentWord.splice(letterIndex, 1, userKey);
+        document.getElementById("current-word").textContent = currentWord.join(" ");
 
-    if (isInWord) {
-        // document.getElementById("user-Key").textContent = userKey;
-        
-    } else {
-        if (lettersGuesses.includes(userKey) == false) {
-            lettersGuesses.push(userKey);
-            document.getElementById("letters-guesses").textContent = lettersGuesses;
-        }
+    } else if (lettersGuesses.includes(userKey) == false) {
+        lettersGuesses.push(userKey);
+        document.getElementById("letters-guesses").textContent = lettersGuesses.join(" ").toUpperCase();
     }
 }
 
