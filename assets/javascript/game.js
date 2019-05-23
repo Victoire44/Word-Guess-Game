@@ -1,48 +1,72 @@
 var score = 0;
-var guessesLeft = 13;
-var lettersGuesses = [];
-var currentWord = [];
+var guessesLeft;
+var lettersGuesses;
+var currentWord;
+var computerWord;
 
 // List of electro bands
 const words = ["Disclosure", "Overwerk", "AlanWalker", "Daftpunk", "Justice", "Diplo", "Davidguetta"];
 
-// Pick a random word
-const computerWord = words[Math.floor(Math.random() * words.length)];
-
-// Replace the random word by dashes
-for (i = 0; i < computerWord.length; i++) {
-    currentWord.push("_")   
-}
-document.getElementById("current-word").textContent = currentWord.join(" ");
-
 // Functions
+function updateCurrentWord() {
+    document.getElementById("current-word").textContent = currentWord.join(" ");
+}
+
 function updateScore() {
     document.getElementById("score").innerHTML = "Wins: " + score;
 }
-updateScore();
 
-function updateGuesses() {
+function updateNumberGuesses() {
     document.getElementById("guesses-left").innerHTML = guessesLeft;
 }
-updateGuesses();
+
+function updateLetters() {
+    document.getElementById("letters-guesses").textContent = lettersGuesses.join(" ").toUpperCase();
+}
+
+function reset() {
+    updateScore();
+
+    guessesLeft = 12;
+    updateNumberGuesses();
+
+    lettersGuesses = [];
+    updateLetters();
+    //pick a random word
+    computerWord = words[Math.floor(Math.random() * words.length)];
+    currentWord = [];
+    // Replace the random word by dashes
+    for (i = 0; i < computerWord.length; i++) {
+        currentWord.push("_");
+    }
+    updateCurrentWord();
+}
+reset();
 
 
 // on key press listener
-document.onkeyup = function (event){
+document.onkeyup = function (event) {
     const userKey = event.key.toUpperCase();
-    const letterIndex = computerWord.toLocaleUpperCase().indexOf(userKey);
+    const letterIndex = computerWord.toUpperCase().indexOf(userKey);
 
-    if (letterIndex !== -1) {
+    if (letterIndex !== -1 && guessesLeft > 0) {
         currentWord.splice(letterIndex, 1, userKey);
-        document.getElementById("current-word").textContent = currentWord.join(" ");
-        score++;
-        updateScore();
-
-    } else if (lettersGuesses.includes(userKey) == false) {
+        updateCurrentWord();
+    } else if (lettersGuesses.includes(userKey) == false && guessesLeft > 0) {
         lettersGuesses.push(userKey);
-        document.getElementById("letters-guesses").textContent = lettersGuesses.join(" ").toUpperCase();
+        updateLetters();
         guessesLeft--;
         updateGuesses();
     }
-}
+
+    if (!currentWord.includes("_")) {
+        score++;
+        updateScore();
+        reset();
+    } else if (guessesLeft <= 0) {
+        alert("Game over");
+        reset();
+    }
+};
+
 
