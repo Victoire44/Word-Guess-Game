@@ -5,12 +5,10 @@ var currentWord;
 var randomWord;
 
 
-// List of electro bands
-const words = ["Disclosure", "Overwerk", "AlanWalker", "Daftpunk", "Justice", "Diplo", "Davidguetta","Electronic"];
+// Array of electro bands
+const words = ["Disclosure", "Overwerk", "AlanWalker", "Daftpunk", "Justice", "Diplo", "Davidguetta", "Electronic"];
 
 // Functions
-
-
 function updateCurrentWord() {
     document.getElementById("current-word").textContent = currentWord.join(" ");
 }
@@ -37,7 +35,7 @@ function reset() {
     updateLetters();
 
     //pick a random word
-    randomWord = words[Math.floor(Math.random() * words.length)];
+    randomWord = words[Math.floor(Math.random() * words.length)].toUpperCase();
     currentWord = [];
 
     // word with dashes
@@ -51,36 +49,41 @@ reset();
 
 // on key press listener
 document.onkeyup = function (event) {
-    const userKey = event.key.toUpperCase();
-    const letterIndex = randomWord.toUpperCase().indexOf(userKey);
+    var userKey = event.key.toUpperCase();
+    var isInWord = randomWord.includes(userKey);
 
-    if (letterIndex !== -1 && guessesLeft > 0) {
-        currentWord.splice(letterIndex, 1, userKey);
+    //If the guessed letter is included in the random word, the dash is replaced by the letter
+    if (isInWord && guessesLeft > 0) {
+        for (var i = 0; i < randomWord.length; i++) {
+            if (userKey === randomWord[i]) {
+                currentWord.splice(i, 1, userKey)
+            }
+        }
         updateCurrentWord();
-
-    } else if (lettersGuesses.includes(userKey) == false && guessesLeft > 0) {
+        /*If the guessed letters are not include in the random word,
+        they diplay into a list and the number of guesses letter descrease */
+    } else if (!lettersGuesses.includes(userKey) && guessesLeft > 0) {
         lettersGuesses.push(userKey);
         updateLetters();
         guessesLeft--;
         updateNumberGuesses();
     }
-
+    //If the random word is completed, the score increase and the game restarts
     if (!currentWord.includes("_")) {
-        alert("You win");
         score++;
         updateScore();
         reset();
+        /*If the random word is not completed before the end,
+        it's game over and the game restart*/
     } else if (guessesLeft <= 0) {
         alert("Game over");
         reset();
     }
-};
+}
 
 //button reset
-$(".btn").on('click', function(){
+$(".btn").on('click', function () {
     score = 0;
     updateScore();
     reset()
-})
-
-
+});
