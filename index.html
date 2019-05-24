@@ -10,32 +10,35 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <title>Word-Guess-Game</title>
 </head>
 
-<body>
+<body class="text-center" style="font-size: 25px;">
     <nav class="navbar bg-dark navbar-fixed text-light">
-        <h1 class="navbar-brand text-center">Hangman</h1>
+        <h1 class="navbar-brand text-center" style="font-family: Electrolize, sans-serif; font-size: 60px;">Hangman</h1>
     </nav>
 
 
-    <div id="container" class="card text-center">
-        <div class="card-header">
-            Press any key to get started
+    <section id="container">
+        <div id="main-header" style="margin-top: 50px; line-height: 2em">
+            <p>Press any key to get started</p>
         </div>
-        <div class="card-body">
-            <p id="user-key"></p>
-            <p id="score"></p>
-            <p id="current-word"></p>
-            <p>Number of guesses remaining</p>
-            <p id="guesses-left"></p>
-            <p>Letters already guesses</p>
 
-            <p id="letters-guesses"></p>
-        </div>
-    </div>
-    <footer class="navbar navbar-expand-lg bg-dark p-2 mt-5">
+        <p id="user-key"></p>
+        <p id="score"></p>
+        <p id="current-word"></p>
+        <p>Number of guesses remaining</p>
+        <p id="guesses-left"></p>
+        <p>Letters already guesses</p>
+        <p id="letters-guesses"></p>
+
+        <button class="btn btn-danger mt-5 mb-5" type="reset">Reset</button>
+
+    </section>
+
+    <footer class="navbar navbar-expand-lg sticky-bottom fixed-bottom p-3" style="background: black; font-size: 15px">
         <div class="container justify-content-center text-light">
             <p>Copyright © 2019 - Victoire Baron</p>
         </div>

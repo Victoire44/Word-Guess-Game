@@ -2,12 +2,15 @@ var score = 0;
 var guessesLeft;
 var lettersGuesses;
 var currentWord;
-var computerWord;
+var randomWord;
+
 
 // List of electro bands
-const words = ["Disclosure", "Overwerk", "AlanWalker", "Daftpunk", "Justice", "Diplo", "Davidguetta"];
+const words = ["Disclosure", "Overwerk", "AlanWalker", "Daftpunk", "Justice", "Diplo", "Davidguetta","Electronic"];
 
 // Functions
+
+
 function updateCurrentWord() {
     document.getElementById("current-word").textContent = currentWord.join(" ");
 }
@@ -32,11 +35,13 @@ function reset() {
 
     lettersGuesses = [];
     updateLetters();
+
     //pick a random word
-    computerWord = words[Math.floor(Math.random() * words.length)];
+    randomWord = words[Math.floor(Math.random() * words.length)];
     currentWord = [];
-    // Replace the random word by dashes
-    for (i = 0; i < computerWord.length; i++) {
+
+    // word with dashes
+    for (i = 0; i < randomWord.length; i++) {
         currentWord.push("_");
     }
     updateCurrentWord();
@@ -47,19 +52,21 @@ reset();
 // on key press listener
 document.onkeyup = function (event) {
     const userKey = event.key.toUpperCase();
-    const letterIndex = computerWord.toUpperCase().indexOf(userKey);
+    const letterIndex = randomWord.toUpperCase().indexOf(userKey);
 
     if (letterIndex !== -1 && guessesLeft > 0) {
         currentWord.splice(letterIndex, 1, userKey);
         updateCurrentWord();
+
     } else if (lettersGuesses.includes(userKey) == false && guessesLeft > 0) {
         lettersGuesses.push(userKey);
         updateLetters();
         guessesLeft--;
-        updateGuesses();
+        updateNumberGuesses();
     }
 
     if (!currentWord.includes("_")) {
+        alert("You win");
         score++;
         updateScore();
         reset();
@@ -68,5 +75,12 @@ document.onkeyup = function (event) {
         reset();
     }
 };
+
+//button reset
+$(".btn").on('click', function(){
+    score = 0;
+    updateScore();
+    reset()
+})
 
 

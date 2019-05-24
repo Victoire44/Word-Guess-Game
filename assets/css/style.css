@@ -1,12 +1,3 @@
-.navbar-brand, .card-header{
-    font-family: 'Electrolize', sans-serif;
-    font-size: 40px;
-}
-
-.container-header{
-    justify-content: center;
-}
-
-.card{
-margin-bottom: 450px;
+body{
+    background-image: url("../images/cubes.png");
 }
